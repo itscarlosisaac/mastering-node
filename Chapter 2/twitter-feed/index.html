@@ -1,0 +1,34 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Access-Control-Allow-Origin" content="*">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Twitter Feed</title>
+</head>
+
+<script>
+    window.onload = () => {
+        let list = document.getElementById("list")
+        let evtSource = new EventSource("http://localhost:8080/events");
+        console.log(evtSource)
+        evtSource.onmessage = (e) => {
+            let newElement = document.createElement("li")
+            newElement.innerHTML = e.data;
+            list.appendChild(newElement)
+        }
+    }
+</script>
+
+<body>
+
+    <div>
+        <ul id="list">
+
+        </ul>
+    </div>
+
+</body>
+
+</html>
