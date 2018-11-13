@@ -22,7 +22,7 @@ let walk = (dir, done) => {
   let results = {};
   let emitter = new EventEmitter;
   fs.readdir(dir, (err, list) => {
-    let pending = list.length;
+    let pending = list ? list.length : null;
     if( err || !pending ){
       return done(err, results)
     }
