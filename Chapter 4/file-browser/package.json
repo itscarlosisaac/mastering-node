@@ -1,0 +1,15 @@
+{
+  "name": "file-browser",
+  "version": "1.0.0",
+  "description": "A simple file browser with electron",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bluebird": "^3.5.3",
+    "electron": "^3.0.9"
+  }
+}
