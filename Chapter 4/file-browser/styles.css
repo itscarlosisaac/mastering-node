@@ -45,6 +45,8 @@ body, html {
   padding: 50px 40px 0;
   width: 100%;
   max-width: 40%;
+  max-height: 70vh;
+  overflow: scroll;
 }
 
 #app .list-item {
@@ -62,8 +64,16 @@ body, html {
 #app #viewer {
   max-width: 50%;
   padding: 20px;
+  max-height: 70vh;
+  overflow: scroll;
+  margin-top: 50px;
 }
 
 #app #viewer p{
   white-space: normal;
+  line-height: 10px;
+}
+
+#app #viewer img {
+  width: 100%;
 }

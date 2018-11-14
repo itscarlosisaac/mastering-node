@@ -56,7 +56,7 @@ function showContent(file){
 
 function go(p){
   if ( isImage(p) ) {
-    app.image = "file://" + p // Show it
+    app.image = "file://" + p 
   } else {
     // Non image
     app.image = null;
@@ -69,6 +69,7 @@ function go(p){
           for ( let i = 0; i < files.length; i++  ) {
             a.push({id: i, name: files[i] });
             app.files = a;
+            app.lines = [];
           }
         }).catch(e => {
           console.log(e.stack)
