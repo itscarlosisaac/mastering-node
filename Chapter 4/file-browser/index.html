@@ -21,7 +21,7 @@
     </div>
     <div id="viewer">
         <p><img v-bind:src="image" alt=""></p>
-        <p>{{content}}</p>
+        <app-line v-for="line in lines" v-bind:line="line"></app-line>
     </div>
   </div>
   <script src="https://unpkg.com/vue"></script>

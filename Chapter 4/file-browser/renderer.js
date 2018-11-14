@@ -1,14 +1,22 @@
 const Promise = require('bluebird');
 const fs = Promise.promisifyAll(require('fs'));
 const path = require('path');
+const readline = require('readline');
 
 Vue.component('listing', {
-  props: ['item'],
+  props: ['item', 'line'],
   template: '<div class="list-item" @click="clicked(item.name)">{{item.name}}</div>',
   methods: {
     clicked(n){
       go(path.format({dir: app.location, base: n }));
     }
+  }
+});
+
+Vue.component('app-line', {
+  props: ['line'],
+  template: '<p>{{line}}</p>',
+  methods: {
   }
 });
 
@@ -18,7 +26,7 @@ var app = new Vue({
     location: process.cwd(),
     files: [],
     image: null,
-    content: null
+    lines: []
   },
   methods: {
     up() {
@@ -35,9 +43,19 @@ function isImage(name){
 }
 
 function showContent(file){
-  return fs.readFileSync(file, 'utf8', (err, data) => {
-    return data;
-  });
+  let data = [];
+  return new Promise( (resolve, reject) => {
+    const rl = readline.createInterface({
+      input: fs.createReadStream(file),
+      crlfDelay: Infinity
+    });
+    rl.on('line', line => { data.push(line)});
+    rl.on('close', line => { resolve(data) });
+  })
+
+  // return fs.readFileSync(file, 'utf8', (err, data) => {
+  //   return data;
+  // });
 }
 
 function go(p){
@@ -62,9 +80,9 @@ function go(p){
         });
       }else {
         // File content
-        let content = showContent(p);
-        console.log(content)
-        app.content = content;
+        showContent(p).then((data) => {
+          app.lines = data;
+        });
       }
     }).catch( e => {
       console.log(e.stack)
