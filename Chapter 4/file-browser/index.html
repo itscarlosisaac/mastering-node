@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./styles.css">
   <title>File Finder</title>
 </head>
 <body>
@@ -11,10 +12,17 @@
     <input type="button" value="Reload the app after changing the code" onclick="window.location.reload()">
   </p>
   <div id="app">
-    <p>{{location}}</p>
-    <button @click="up">..</button>
-    <listing v-for="file in files" v-bind:key="file.id" v-bind:item="file"></listing>
-    <p><img v-bind:src="image" alt=""></p>
+    <header>
+        <p>{{location}}</p>
+        <button @click="up">Go up</button>
+    </header>
+    <div id="list">
+        <listing v-for="file in files" v-bind:key="file.id" v-bind:item="file"></listing>
+    </div>
+    <div id="viewer">
+        <p><img v-bind:src="image" alt=""></p>
+        <p>{{content}}</p>
+    </div>
   </div>
   <script src="https://unpkg.com/vue"></script>
   <script>require('./renderer.js');</script>

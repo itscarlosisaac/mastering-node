@@ -4,7 +4,7 @@ const path = require('path');
 
 Vue.component('listing', {
   props: ['item'],
-  template: '<div @click="clicked(item.name)">{{item.name}}</div>',
+  template: '<div class="list-item" @click="clicked(item.name)">{{item.name}}</div>',
   methods: {
     clicked(n){
       go(path.format({dir: app.location, base: n }));
@@ -17,7 +17,8 @@ var app = new Vue({
   data: {
     location: process.cwd(),
     files: [],
-    image: null
+    image: null,
+    content: null
   },
   methods: {
     up() {
@@ -26,13 +27,22 @@ var app = new Vue({
   }
 })
 
+
+function isImage(name){
+  const ext = /[^.]+$/.exec(name)[0].toLowerCase();
+  const imagesFormat = ['bmp', 'jpg', 'jpeg', 'tiff', 'png'];
+  return imagesFormat.includes(ext);
+}
+
+function showContent(file){
+  return fs.readFileSync(file, 'utf8', (err, data) => {
+    return data;
+  });
+}
+
 function go(p){
-  if (
-    p.endsWith(".bmp") ||
-    p.endsWith(".png") ||
-    p.endsWith(".gif") ||
-    p.endsWith(".jpg")
-  ) {
+  console.log( isImage(p) )
+  if ( isImage(p) ) {
     app.image = "file://" + p // Show it
   } else {
     // Non image
@@ -51,12 +61,18 @@ function go(p){
           console.log(e.stack)
         });
       }else {
-        // Non a directory
+        // File content
+        let content = showContent(p);
+        console.log(content)
+        app.content = content;
       }
     }).catch( e => {
       console.log(e.stack)
     })
   }
 }
+
+
+
 
 go(app.location)
