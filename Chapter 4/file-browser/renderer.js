@@ -51,15 +51,10 @@ function showContent(file){
     });
     rl.on('line', line => { data.push(line)});
     rl.on('close', line => { resolve(data) });
-  })
-
-  // return fs.readFileSync(file, 'utf8', (err, data) => {
-  //   return data;
-  // });
+  });
 }
 
 function go(p){
-  console.log( isImage(p) )
   if ( isImage(p) ) {
     app.image = "file://" + p // Show it
   } else {
