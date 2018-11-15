@@ -56,7 +56,7 @@ function showContent(file){
 
 function go(p){
   if ( isImage(p) ) {
-    app.image = "file://" + p 
+    app.image = "file://" + p
   } else {
     // Non image
     app.image = null;
