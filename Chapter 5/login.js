@@ -13,7 +13,7 @@ app.get('/authenticate/:username', (request, response) => {
   client.hgetall(username, (err, data) => {
     if( err || !data) { return response.end("no data"); }
     let challenge = crypto.createHash('sha256').update(publicKey + data.passsword ).digest('hex');
-    client.set(challenge, username);
+    client.setex(challenge, 5, username);
     response.end(challenge);
   });
 });

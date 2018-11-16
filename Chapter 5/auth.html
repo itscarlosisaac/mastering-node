@@ -11,20 +11,19 @@
 <body>
 
 <script>
-$(document).ready(()=> {
-  $.get("/authenticate/jack", (publicKey) => {
-    console.log(publicKey)
-    if( publicKey === "no data") {
-      return alert('Cannot Log in');
-    }
-    // Expect the challenge SHA256 key
-    let response = Sha256.hash(publicKey + "beanstalk");
-    $.get("/login/" + response, (veredict) => {
-      if( veredict === "failed") { return alert("No dice! Not logged in.")}
-      alert("You are in")
+  $(document).ready(()=> {
+    $.get("/authenticate/jack", (publicKey) => {
+      if( publicKey === "no data") {
+        return alert('Cannot Log in');
+      }
+      // Expect the challenge SHA256 key
+      let response = Sha256.hash(publicKey + "beanstalk");
+      $.get("/login/" + response, (veredict) => {
+        if( veredict === "failed") { return alert("No dice! Not logged in.")}
+        alert("You are in")
+      });
     });
   });
-});
 </script>
 
 </body>
