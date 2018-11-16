@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Auth Example</title>
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+  <script src="http://localhost:8080/256"></script>
+  </head>
+<body>
+
+<script>
+$(document).ready(()=> {
+  $.get("/authenticate/jack", (publicKey) => {
+    console.log(publicKey)
+    if( publicKey === "no data") {
+      return alert('Cannot Log in');
+    }
+    // Expect the challenge SHA256 key
+    let response = Sha256.hash(publicKey + "beanstalk");
+    $.get("/login/" + response, (veredict) => {
+      if( veredict === "failed") { return alert("No dice! Not logged in.")}
+      alert("You are in")
+    });
+  });
+});
+</script>
+
+</body>
+</html>
