@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Event Source</title>
+  <script>
+    let ev = new EventSource('/login');
+    ev.addEventListener("message", broadcast => {
+      document.getElementById("clock").innerHTML = broadcast.data;
+    })
+  </script>
+</head>
+<body>
+  <div id="clock"></div>
+</body>
+</html>
